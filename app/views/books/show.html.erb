@@ -23,11 +23,18 @@
 					</td>
 					<td><%= link_to @book.title, @book %></td>
 					<td><%= @book.body %></td>
+
+					<!-- いいね機能 -->
 					<td>
 						<div id="favorite_buttons_<%= @book.id %>">
 							<%= render partial: 'books/favorite', locals: { book: @book} %>
 						</div>
 					</td>
+					<td>
+						コメント数 : <%= @book.book_comments.count %>
+					</td>
+
+					<!-- 自分の投稿だったら編集ボタンと削除ボタン -->
 					<% if current_user.id == @book.user_id %>
 					<td><%= link_to "Edit",edit_book_path(@book), class: "btn-sm btn-success edit_book_#{@book.id}" %></td>
 					<td><%= link_to "Destroy",@book, method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn-sm btn-danger destroy_book_#{@book.id}" %></td>
@@ -35,6 +42,22 @@
 				</tr>
 			</table>
 
+			<!-- コメント一覧 -->
+			<div id="comment-text">
+				<%= render partial: 'book_comments/comment', locals: {comments: @comments} %>
+			</div>
+
+
+			<!-- コメントフォーム -->
+			<div class="comment-form">
+				<%= form_with(model: [@book, @book_comment], remote: true) do |f| %>
+					<%= f.text_area :comment %>
+					<%= f.submit '送信' %>
+				<% end %>
+			</div>
+
+			
+			
 	</div>
 </div>
 
