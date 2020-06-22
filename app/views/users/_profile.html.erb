@@ -10,7 +10,27 @@
 			<th>introduction</th>
 			<th><%= user.introduction %></th>
 		</tr>
+
+		<tr>
+			<th>follows</th>
+			<th><%= user.follower.count %></th>
+		</tr>
+
+		<tr>
+			<th>followers</th>
+			<th><%= user.followed.count %></th>
+		</tr>
 </table>
+
+<% if user != current_user %>
+	<div id="follow_form">
+		<% if current_user.following?(user) %>
+			<%= render 'users/unfollow' %>
+		<% elsif %>
+			<%= render 'users/follow' %>
+		<% end %>
+	</div>
+<% end %>
 
 <div class="row">
 	<%= link_to '',edit_user_path(user), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_#{user.id}" %>
