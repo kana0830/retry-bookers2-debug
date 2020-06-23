@@ -26,13 +26,13 @@ class UsersController < ApplicationController
   	end
 	end
 
-	def follow
+	def follower
 		@user = User.find(params[:id])
 		@users = @user.follow
 		render 'relationships/create'
 	end
 
-	def unfollow
+	def followed
 		@user = User.find(params[:id])
 		@users = @user.unfollow
 		render 'relationships/destroy'
